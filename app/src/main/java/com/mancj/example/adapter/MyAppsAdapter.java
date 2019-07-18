@@ -1,8 +1,12 @@
-package com.mancj.example.Page;
+package com.mancj.example.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+
+import com.mancj.example.Page.InstalledFragment;
+import com.mancj.example.Page.LibraryFragment;
+import com.mancj.example.Page.UpdatesFragment;
 
 public class MyAppsAdapter extends FragmentStatePagerAdapter{
 

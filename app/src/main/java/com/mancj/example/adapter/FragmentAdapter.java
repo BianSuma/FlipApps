@@ -1,8 +1,10 @@
-package com.mancj.example.Page;
+package com.mancj.example.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import com.mancj.example.Page.Fragment1;
 
 public class FragmentAdapter extends FragmentPagerAdapter {
 

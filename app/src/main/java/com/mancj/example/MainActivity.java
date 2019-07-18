@@ -2,7 +2,6 @@ package com.mancj.example;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -14,11 +13,10 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.mancj.example.Page.AccountActivity;
-import com.mancj.example.Page.FragmentAdapter;
+import com.mancj.example.adapter.FragmentAdapter;
 import com.mancj.example.Page.MyAppsActivity;
 import com.mancj.example.Page.SettingActivity;
 import com.mancj.example.Page.WishlistActivity;

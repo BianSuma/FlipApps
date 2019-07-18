@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.mancj.example.R;
+import com.mancj.example.adapter.MyAppsAdapter;
 
 public class MyAppsActivity extends AppCompatActivity implements UpdatesFragment.OnFragmentInteractionListener, InstalledFragment.OnFragmentInteractionListener, LibraryFragment.OnFragmentInteractionListener {
 

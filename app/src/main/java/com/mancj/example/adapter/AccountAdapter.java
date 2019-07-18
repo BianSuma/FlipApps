@@ -1,8 +1,12 @@
-package com.mancj.example.Page;
+package com.mancj.example.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+
+import com.mancj.example.Page.PreferencesFragment;
+import com.mancj.example.Page.PurchaseHistoryFragment;
+import com.mancj.example.Page.RewardsFragment;
 
 public class AccountAdapter extends FragmentStatePagerAdapter {
     int TabsNumber;
