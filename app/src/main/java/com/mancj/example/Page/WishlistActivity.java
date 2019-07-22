@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -57,6 +56,7 @@ public class WishlistActivity extends AppCompatActivity {
             public void onResponse(Call<WishlistData> call, Response<WishlistData> response) {
                 progressBar.setVisibility(View.GONE);
                 Log.d("WishlistActivity", "onResponse: Server Response: " + response.toString());
+                assert response.body() != null;
                 Log.d("WishlistActivity", "onResponse: received information: " + response.body().toString());
 
                 List<Wishlist> wishlist = response.body().getWishlist();

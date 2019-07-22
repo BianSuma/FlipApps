@@ -1,5 +1,6 @@
 package com.mancj.example.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,8 @@ import com.mancj.example.R;
 import com.mancj.example.pojo.Wishlist;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.List;
 
 public class WishlistAdapter extends BaseAdapter {
@@ -40,6 +43,7 @@ public class WishlistAdapter extends BaseAdapter {
         return position;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
@@ -49,8 +53,18 @@ public class WishlistAdapter extends BaseAdapter {
         TextView appSizeTextView = convertView.findViewById(R.id.appSizeTextView);
         ImageView appImageView = convertView.findViewById(R.id.appImageView);
         final Wishlist wishlistData = wishlist.get(position);
+
+        // For the price of the app
+        DecimalFormat kursIndonesia = (DecimalFormat) DecimalFormat.getCurrencyInstance();
+        DecimalFormatSymbols formatRp = new DecimalFormatSymbols();
+        formatRp.setCurrencySymbol("Rp. ");
+        formatRp.setMonetaryDecimalSeparator(',');
+        formatRp.setGroupingSeparator('.');
+        kursIndonesia.setDecimalFormatSymbols(formatRp);
+
+        // For the view
         appNameTextView.setText(wishlistData.getApp_name());
-        appSizeTextView.setText("Price : Rp." + String.valueOf(wishlistData.getApp_price()));
+        appSizeTextView.setText("Price : " + kursIndonesia.format(wishlistData.getApp_price()));
         if (wishlistData.getApp_poster() != null && wishlistData.getApp_poster().length() > 0) {
             Picasso.get().load(wishlistData.getApp_poster()).placeholder(R.drawable.basket).into(appImageView);
         } else {
