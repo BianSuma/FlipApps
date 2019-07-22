@@ -10,29 +10,29 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mancj.example.R;
-import com.mancj.example.pojo.Aplikasi;
+import com.mancj.example.pojo.Wishlist;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class WishlistAdapter extends BaseAdapter {
 
-    private List<Aplikasi> aplikasiList;
+    private List<Wishlist> wishlist;
     private Context context;
 
-    public WishlistAdapter(List<Aplikasi> aplikasiList, Context context) {
-        this.aplikasiList = aplikasiList;
+    public WishlistAdapter(List<Wishlist> wishlist, Context context) {
+        this.wishlist = wishlist;
         this.context = context;
     }
 
     @Override
     public int getCount() {
-        return aplikasiList.size();
+        return wishlist.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return aplikasiList.get(position);
+        return wishlist.get(position);
     }
 
     @Override
@@ -48,11 +48,11 @@ public class WishlistAdapter extends BaseAdapter {
         TextView appNameTextView = convertView.findViewById(R.id.appNameTextView);
         TextView appSizeTextView = convertView.findViewById(R.id.appSizeTextView);
         ImageView appImageView = convertView.findViewById(R.id.appImageView);
-        final Aplikasi aplikasi = aplikasiList.get(position);
-        appNameTextView.setText(aplikasi.getApp_name());
-        appSizeTextView.setText(aplikasi.getApp_price());
-        if (aplikasi.getApp_poster() != null && aplikasi.getApp_poster().length() > 0) {
-            Picasso.get().load(aplikasi.getApp_poster()).placeholder(R.drawable.basket).into(appImageView);
+        final Wishlist wishlistData = wishlist.get(position);
+        appNameTextView.setText(wishlistData.getApp_name());
+        appSizeTextView.setText("Price : Rp." + String.valueOf(wishlistData.getApp_price()));
+        if (wishlistData.getApp_poster() != null && wishlistData.getApp_poster().length() > 0) {
+            Picasso.get().load(wishlistData.getApp_poster()).placeholder(R.drawable.basket).into(appImageView);
         } else {
             Toast.makeText(context, "Empty Image URL", Toast.LENGTH_SHORT).show();
             Picasso.get().load(R.drawable.basket).into(appImageView);
@@ -60,7 +60,7 @@ public class WishlistAdapter extends BaseAdapter {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, aplikasi.getApp_name(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, wishlistData.getApp_name(), Toast.LENGTH_SHORT).show();
             }
         });
         return convertView;
