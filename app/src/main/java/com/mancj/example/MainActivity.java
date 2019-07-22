@@ -1,8 +1,10 @@
 package com.mancj.example;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -16,6 +18,10 @@ import android.view.MenuItem;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.mancj.example.Page.AccountActivity;
+import com.mancj.example.Page.CartFragment;
+import com.mancj.example.Page.CategoryFragment;
+import com.mancj.example.Page.HomeFragment;
+import com.mancj.example.adapter.AccountAdapter;
 import com.mancj.example.adapter.FragmentAdapter;
 import com.mancj.example.Page.MyAppsActivity;
 import com.mancj.example.Page.SettingActivity;
@@ -23,7 +29,8 @@ import com.mancj.example.Page.WishlistActivity;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, MaterialSearchBar.OnSearchActionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, MaterialSearchBar.OnSearchActionListener,
+        HomeFragment.OnFragmentInteractionListener, CategoryFragment.OnFragmentInteractionListener, CartFragment.OnFragmentInteractionListener {
     MaterialSearchBar searchBar;
     private DrawerLayout drawer;
 
@@ -57,17 +64,38 @@ public class MainActivity extends AppCompatActivity
 
         });
 
+        //For Tab Bar widget
+        TabLayout tabLayout = findViewById(R.id.tabSlider);
+        tabLayout.addTab(tabLayout.newTab().setText("HOME"));
+        tabLayout.addTab(tabLayout.newTab().setText("CATEGORY"));
+        tabLayout.addTab(tabLayout.newTab().setText("KART"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        //slider
+        final ViewPager viewPager = findViewById(R.id.viewPagerSlider);
+        final FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(adapter);
+        viewPager.setOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-        // Get the ViewPager and set it's PagerAdapter so that it can display items
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
-        viewPager.setAdapter(new FragmentAdapter(getSupportFragmentManager()));
-//
-//        // Give the PagerSlidingTabStrip the ViewPager
-        PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
-//        // Attach the view pager to the tab strip
-        tabsStrip.setViewPager(viewPager);
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+
+
+
     }
 
     @Override
@@ -178,5 +206,15 @@ public class MainActivity extends AppCompatActivity
 
     public void sendReviews() {
         // This method is used for sending the reviews
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
     }
 }
