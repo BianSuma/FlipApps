@@ -11,6 +11,8 @@ import android.support.v7.app.AlertDialog;
 
 import com.mancj.example.R;
 
+import java.util.Objects;
+
 @SuppressLint("ValidFragment")
 public class SingleChoiceDialog extends DialogFragment {
 
@@ -43,17 +45,19 @@ public class SingleChoiceDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()));
         position = 0;
-        System.out.println("THE TITLE IS " + title);
         if (title.equalsIgnoreCase("app_download")) {
             list = getActivity().getResources().getStringArray(R.array.app_download);
             builder.setTitle("App Download Preferences");
         } else if(title.equalsIgnoreCase("app_update")) {
             list = getActivity().getResources().getStringArray(R.array.app_update);
             builder.setTitle("Auto-Updates apps");
-        } else {
-
+        } else if (title.equalsIgnoreCase("sort_menu")){
+            list = new String[2];
+            list[0] = "Smart Home";
+            list[1] = "Smart School";
+            builder.setTitle("Sorting by");
         }
 
         builder.setSingleChoiceItems(list, position, new DialogInterface.OnClickListener() {

@@ -3,19 +3,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="5dp"
     card_view_cardCornerRadius="10dp"
-    card_view_cardElevation="5dp"
     android:orientation="horizontal">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/appImageView"
             android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_height="120dp"
+            android:layout_marginLeft="10dp"
             android:padding="5dp"
             android:src="@drawable/basket"/>
 
@@ -25,8 +24,10 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="App Name"
-            android:padding="5dp"
-            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:textColor="@color/colorBlue"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/appImageView"/>
 
@@ -35,9 +36,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Size"
+            android:text="Price"
             android:textStyle="italic"
-            android:padding="5dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="20dp"
             android:layout_alignBottom="@+id/appImageView"
             android:layout_toRightOf="@+id/appImageView"
             />

@@ -1,9 +1,13 @@
 package com.mancj.example.Page;
 
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
@@ -15,6 +19,7 @@ import android.widget.Toast;
 
 import com.mancj.example.R;
 import com.mancj.example.adapter.WishlistAdapter;
+import com.mancj.example.dialog.SingleChoiceDialog;
 import com.mancj.example.pojo.Wishlist;
 import com.mancj.example.pojo.WishlistData;
 
@@ -26,11 +31,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 
-public class WishlistActivity extends AppCompatActivity {
+public class WishlistActivity extends AppCompatActivity implements SingleChoiceDialog.SingleChoiceListener {
 
     WishlistAdapter adapter;
     ListView wishlistListView;
     ProgressBar progressBar;
+    List<Wishlist> wishlist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +65,7 @@ public class WishlistActivity extends AppCompatActivity {
                 assert response.body() != null;
                 Log.d("WishlistActivity", "onResponse: received information: " + response.body().toString());
 
-                List<Wishlist> wishlist = response.body().getWishlist();
+                wishlist = response.body().getWishlist();
                 populateListView(wishlist);
             }
 
@@ -69,28 +75,49 @@ public class WishlistActivity extends AppCompatActivity {
                 Toast.makeText(WishlistActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
-//        call.enqueue(new Callback<Wishlist>() {
-//            @Override
-//            public void onResponse(Call<List<Aplikasi>> call, Response<List<Aplikasi>> response) {
-//                progressBar.setVisibility(View.GONE);
-//                populateListView(response.body());
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<Aplikasi>> call, Throwable t) {
-//                progressBar.setVisibility(View.GONE);
-//                Toast.makeText(WishlistActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
-//            }
-//        });
-
-        // For the list view
-
     }
 
     private void populateListView(List<Wishlist> wishlist) {
         wishlistListView = findViewById(R.id.wishlistListView);
         adapter = new WishlistAdapter(wishlist,this);
         wishlistListView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onPositiveButtonClicked(final String[] list, final int position) {
+        progressBar.setVisibility(View.VISIBLE);
+        MyAPIService myAPIService = RetrofitClientInstance.getRetrofitInstance().create(MyAPIService.class);
+        Call<WishlistData> call = myAPIService.getWishlist();
+        call.enqueue(new Callback<WishlistData>() {
+            @Override
+            public void onResponse(Call<WishlistData> call, Response<WishlistData> response) {
+                progressBar.setVisibility(View.GONE);
+                Log.d("WishlistActivity", "onResponse: Server Response: " + response.toString());
+                assert response.body() != null;
+                Log.d("WishlistActivity", "onResponse: received information: " + response.body().toString());
+
+//                wishlist = response.body().getWishlist();
+                for(Wishlist datawishlist : response.body().getWishlist()) {
+                    if (datawishlist.getCategory_name().equalsIgnoreCase(list[position])) {
+                        wishlist.add(datawishlist);
+                    } else {
+
+                    }
+                }
+                populateListView(wishlist);
+            }
+
+            @Override
+            public void onFailure(Call<WishlistData> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(WishlistActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    @Override
+    public void onNegativeButtonClicked() {
+
     }
 
     static class RetrofitClientInstance {
@@ -105,6 +132,31 @@ public class WishlistActivity extends AppCompatActivity {
             }
             return retrofit;
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.wishlist_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.sort_menu:
+                openDialog("sort_menu");
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void openDialog(String title) {
+        DialogFragment singleChoiceDialog = new SingleChoiceDialog(title);
+        singleChoiceDialog.setCancelable(false);
+        singleChoiceDialog.show(getSupportFragmentManager(), "Single Choice Dialog");
     }
 }
 
