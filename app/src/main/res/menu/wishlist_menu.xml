@@ -6,4 +6,8 @@
         android:id="@+id/sort_menu"
         android:title="Sort By"/>
 
+    <item
+        android:id="@+id/show_all"
+        android:title="Show all"/>
+
 </menu>

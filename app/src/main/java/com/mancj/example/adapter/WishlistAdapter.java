@@ -63,13 +63,24 @@ public class WishlistAdapter extends BaseAdapter {
         kursIndonesia.setDecimalFormatSymbols(formatRp);
 
         // For the view
-        appNameTextView.setText(wishlistData.getApp_name());
-        appSizeTextView.setText("Price : " + kursIndonesia.format(wishlistData.getApp_price()));
-        if (wishlistData.getApp_poster() != null && wishlistData.getApp_poster().length() > 0) {
-            Picasso.get().load(wishlistData.getApp_poster()).placeholder(R.drawable.basket).into(appImageView);
+        if (wishlistData.getApp_id() == 0) {
+            appNameTextView.setText("No App");
+            appSizeTextView.setText("Price : -");
+            if (wishlistData.getApp_poster() != null && wishlistData.getApp_poster().length() > 0) {
+                Picasso.get().load(wishlistData.getApp_poster()).placeholder(R.drawable.basket).into(appImageView);
+            } else {
+                Toast.makeText(context, "Empty Image URL", Toast.LENGTH_SHORT).show();
+                Picasso.get().load(R.drawable.basket).into(appImageView);
+            }
         } else {
-            Toast.makeText(context, "Empty Image URL", Toast.LENGTH_SHORT).show();
-            Picasso.get().load(R.drawable.basket).into(appImageView);
+            appNameTextView.setText(wishlistData.getApp_name());
+            appSizeTextView.setText("Price : " + kursIndonesia.format(wishlistData.getApp_price()));
+            if (wishlistData.getApp_poster() != null && wishlistData.getApp_poster().length() > 0) {
+                Picasso.get().load(wishlistData.getApp_poster()).placeholder(R.drawable.basket).into(appImageView);
+            } else {
+                Toast.makeText(context, "Empty Image URL", Toast.LENGTH_SHORT).show();
+                Picasso.get().load(R.drawable.basket).into(appImageView);
+            }
         }
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
