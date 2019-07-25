@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 import com.mancj.example.R;
 import com.mancj.example.adapter.WishlistAdapter;
+import com.mancj.example.dialog.AlertDeleteDialog;
 import com.mancj.example.dialog.SingleChoiceDialog;
 import com.mancj.example.pojo.Wishlist;
 import com.mancj.example.pojo.WishlistData;
@@ -36,7 +38,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
-public class WishlistActivity extends AppCompatActivity implements SingleChoiceDialog.SingleChoiceListener {
+public class WishlistActivity extends AppCompatActivity implements SingleChoiceDialog.SingleChoiceListener, AlertDeleteDialog.AlertDeleteListener {
 
     WishlistAdapter adapter;
     ListView wishlistListView;
@@ -63,34 +65,19 @@ public class WishlistActivity extends AppCompatActivity implements SingleChoiceD
         showWishlist();
     }
 
-    private void populateListView(List<Wishlist> wishlist) {
-        wishlistListView = findViewById(R.id.wishlistListView);
-        adapter = new WishlistAdapter(wishlist,this);
-        wishlistListView.setAdapter(adapter);
-    }
-
     @Override
     public void onPositiveButtonClicked(final String[] list, final int position) {
         sortWishlist(list, position);
     }
 
     @Override
-    public void onNegativeButtonClicked() {
+    public void onPositiveButtonClicked() {
 
     }
 
-    static class RetrofitClientInstance {
-        private static Retrofit retrofit;
-        private static final String BASE_URL = "https://amentiferous-grass.000webhostapp.com";
-        static Retrofit getRetrofitInstance() {
-            if (retrofit == null) {
-                retrofit = new Retrofit.Builder()
-                        .baseUrl(BASE_URL)
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
-            }
-            return retrofit;
-        }
+    @Override
+    public void onNegativeButtonClicked() {
+
     }
 
     @Override
@@ -115,13 +102,19 @@ public class WishlistActivity extends AppCompatActivity implements SingleChoiceD
         return super.onOptionsItemSelected(item);
     }
 
-    public void openDialog(String title) {
+    private void populateListView(List<Wishlist> wishlist) {
+        wishlistListView = findViewById(R.id.wishlistListView);
+        adapter = new WishlistAdapter(wishlist,this);
+        wishlistListView.setAdapter(adapter);
+    }
+
+    void openDialog(String title) {
         DialogFragment singleChoiceDialog = new SingleChoiceDialog(title);
         singleChoiceDialog.setCancelable(false);
         singleChoiceDialog.show(getSupportFragmentManager(), "Single Choice Dialog");
     }
 
-    public void showWishlist() {
+    void showWishlist() {
         progressBar.setVisibility(View.VISIBLE);
         MyAPIService myAPIService = RetrofitClientInstance.getRetrofitInstance().create(MyAPIService.class);
         Call<WishlistData> call = myAPIService.getWishlist();
@@ -150,7 +143,7 @@ public class WishlistActivity extends AppCompatActivity implements SingleChoiceD
         });
     }
 
-    public void deleteWishlist(Wishlist delete) {
+    void deleteWishlist(Wishlist delete) {
         // This is delete method for wishlist
         progressBar.setVisibility(View.VISIBLE);
         Wishlist wishlistDelete = new Wishlist();
@@ -195,7 +188,7 @@ public class WishlistActivity extends AppCompatActivity implements SingleChoiceD
         });
     }
 
-    public void sortWishlist(final String[] list, final int position) {
+    void sortWishlist(final String[] list, final int position) {
         // This is sort method for wishlist by category
         progressBar.setVisibility(View.VISIBLE);
         MyAPIService myAPIService = RetrofitClientInstance.getRetrofitInstance().create(MyAPIService.class);
@@ -231,6 +224,25 @@ public class WishlistActivity extends AppCompatActivity implements SingleChoiceD
                 Toast.makeText(WishlistActivity.this, "There's no internet connection", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+    static class RetrofitClientInstance {
+        private static Retrofit retrofit;
+        private static final String BASE_URL = "https://amentiferous-grass.000webhostapp.com";
+        static Retrofit getRetrofitInstance() {
+            if (retrofit == null) {
+                retrofit = new Retrofit.Builder()
+                        .baseUrl(BASE_URL)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+            }
+            return retrofit;
+        }
     }
 }
 

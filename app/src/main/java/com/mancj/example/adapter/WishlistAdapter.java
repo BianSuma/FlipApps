@@ -2,6 +2,9 @@ package com.mancj.example.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mancj.example.R;
+import com.mancj.example.dialog.AlertDeleteDialog;
 import com.mancj.example.pojo.Wishlist;
 import com.squareup.picasso.Picasso;
 
@@ -18,7 +22,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.List;
 
-public class WishlistAdapter extends BaseAdapter {
+public class WishlistAdapter extends BaseAdapter{
 
     private List<Wishlist> wishlist;
     private Context context;
@@ -88,6 +92,21 @@ public class WishlistAdapter extends BaseAdapter {
                 Toast.makeText(context, wishlistData.getApp_name(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        convertView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                openDeleteAlertDialog(((AppCompatActivity)context).getSupportFragmentManager());
+                return true;
+            }
+        });
+
         return convertView;
+    }
+
+    void openDeleteAlertDialog(FragmentManager fm) {
+        DialogFragment alertDeleteDialog = new AlertDeleteDialog();
+        alertDeleteDialog.setCancelable(false);
+        alertDeleteDialog.show(fm, "Alert Delete Dialog");
     }
 }
