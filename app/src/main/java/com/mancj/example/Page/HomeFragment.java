@@ -3,105 +3,112 @@ package com.mancj.example.Page;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.ViewFlipper;
 
+import com.mancj.example.MainActivity;
 import com.mancj.example.R;
+import com.mancj.example.adapter.HorizontalRecAdapter;
+import com.mancj.example.adapter.HorizontalScrollModel;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link HomeFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class HomeFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+import java.util.ArrayList;
+import java.util.List;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+public class HomeFragment extends Fragment{
+
 
     public HomeFragment() {
-        // Required empty public constructor
+
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+//    public HomeFragment newInstance(MainActivity mainActivity) {
+//
+//        return new HomeFragment();
+//    }
 
+
+    //horizontal scroll
+
+    private TextView horizontallayoutTitle;
+    private Button horizontalviewAllButton;
+    private RecyclerView horizontalRecyclerView,horizontalRecyclerView2,horizontalRecyclerView3;
+    @Nullable
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+//        return super.onCreateView(inflater, container, savedInstanceState);
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        viewflip(view);
+        HorizontalScrollRec(view);
+
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+    public void viewflip(View view)
+    {
+        // -------View Flipper
+        //1 - Create the animations, we will load the animations from
+        //    the already made animations in the android.R.anim folder
+        //    custom animations can be added into to res/anim folder
+        Animation anim_in = AnimationUtils.loadAnimation(getContext(),android.R.anim.slide_in_left);
+        Animation anim_out = AnimationUtils.loadAnimation(getContext(),android.R.anim.slide_out_right);
+
+
+        //2 - Find the fipper in the XML
+        ViewFlipper vf = view.findViewById(R.id.vf);
+
+        //3 - Assisgn the animations
+        vf.setInAnimation(anim_in);
+        vf.setOutAnimation(anim_out);
+
+        //4 - Set the flipping interval, that is the time between flips
+        vf.setFlipInterval(8000);
+
+        //5 - Start FLipping - optional here, can also be
+        //    called on click for click to flip
+        vf.startFlipping();
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+    public void HorizontalScrollRec(View view){
+        ///Horizontal Dokumen layout
+        horizontallayoutTitle= view.findViewById(R.id.horizontal_scroll_layout_title);
+        horizontalviewAllButton=view.findViewById(R.id.horizontal_scroll_view_all_button);
+        horizontalRecyclerView=view.findViewById(R.id.horizontal_scroll_layout_recycler);
+
+        List<HorizontalScrollModel> horizontalScrollModelListDokumen = new ArrayList<>();
+        horizontalScrollModelListDokumen.add(new HorizontalScrollModel(R.mipmap.ic_launcher,"App1","mantap","Rp.500"));
+        horizontalScrollModelListDokumen.add(new HorizontalScrollModel(R.mipmap.ic_launcher,"App1","keren","Rp.500"));
+        horizontalScrollModelListDokumen.add(new HorizontalScrollModel(R.mipmap.ic_launcher,"App1","asyik","Rp.500"));
+        horizontalScrollModelListDokumen.add(new HorizontalScrollModel(R.mipmap.ic_launcher,"Sertifikat","wow banget","Rp.500"));
+        horizontalScrollModelListDokumen.add(new HorizontalScrollModel(R.mipmap.ic_launcher,"Portfolio","wadaw","Rp.500"));
+        horizontalScrollModelListDokumen.add(new HorizontalScrollModel(R.mipmap.ic_launcher,"Skripsi","luar biasa","Rp.500"));
+
+        HorizontalRecAdapter horizontalDokumenScrollAdapter =new HorizontalRecAdapter(horizontalScrollModelListDokumen);
+        LinearLayoutManager linearLayoutManager= new LinearLayoutManager(getContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        horizontalRecyclerView.setLayoutManager(linearLayoutManager);
+
+        horizontalRecyclerView.setAdapter(horizontalDokumenScrollAdapter);
+        horizontalDokumenScrollAdapter.notifyDataSetChanged();
+    }
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);

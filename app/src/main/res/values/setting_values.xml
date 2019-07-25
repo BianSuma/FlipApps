@@ -10,4 +10,16 @@
         <item>Over Wi-Fi only</item>
         <item>Don\'t auto-update apps</item>
     </string-array>
+
+    //scrol_home
+    <string name="text_title">title</string>
+    <string name="text_description">description</string>
+    <string name="text_price">price</string>
+    <string name="content_descriptionn">yeah! click me!</string>
+    <string name="text_lihat_semua">Lihat Semua</string>
+
+
+    //recommend
+    <string name="title_dokumen">Recommended</string>
+
 </resources>
