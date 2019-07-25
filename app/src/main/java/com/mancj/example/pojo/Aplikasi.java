@@ -1,42 +1,60 @@
 package com.mancj.example.pojo;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Aplikasi {
 
     @SerializedName("app_id")
+    @Expose
     private int app_id;
     @SerializedName("app_name")
+    @Expose
     private String app_name;
     @SerializedName("category_name")
+    @Expose
     private String category_name;
     @SerializedName("user_name")
+    @Expose
     private String user_name;
     @SerializedName("app_desc")
+    @Expose
     private String app_desc;
     @SerializedName("app_price")
+    @Expose
     private int app_price;
     @SerializedName("app_poster")
+    @Expose
     private String app_poster;
     @SerializedName("app_screen_capture_1")
+    @Expose
     private String app_screen_capture_1;
     @SerializedName("app_screen_capture_2")
+    @Expose
     private String app_screen_capture_2;
     @SerializedName("app_screen_capture_3")
+    @Expose
     private String app_screen_capture_3;
     @SerializedName("app_version")
+    @Expose
     private String app_version;
     @SerializedName("app_released")
+    @Expose
     private String app_released;
     @SerializedName("app_review_value")
+    @Expose
     private float app_review_value;
     @SerializedName("app_requirement")
+    @Expose
     private String app_requirement;
     @SerializedName("app_demo_link")
+    @Expose
     private String app_demo_link;
     @SerializedName("app_last_updated")
+    @Expose
     private String app_last_updated;
     @SerializedName("app_purchased")
+    @Expose
     private int app_purchased;
 
     public Aplikasi(int app_id, String app_name, String category_name, String user_name, String app_desc, int app_price, String app_poster, String app_screen_capture_1, String app_screen_capture_2, String app_screen_capture_3, String app_version, String app_released, float app_review_value, String app_requirement, String app_demo_link, String app_last_updated, int app_purchased) {
