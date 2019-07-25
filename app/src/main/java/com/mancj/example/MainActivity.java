@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity
         searchBar.setOnSearchActionListener(this);
         searchBar.inflateMenu(R.menu.main);
         Log.d("LOG_TAG", getClass().getSimpleName() + ": text " + searchBar.getText());
-        searchBar.setCardViewElevation(5);
+        searchBar.setCardViewElevation(10);
         searchBar.addTextChangeListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
