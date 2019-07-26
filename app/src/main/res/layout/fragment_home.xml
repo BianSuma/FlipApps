@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.constraint.ConstraintLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:orientation="vertical"
+android:id="@+id/home"
+android:layout_marginBottom="@dimen/margin_50dp"
+android:layout_height="match_parent"
+tools:context=".Page.HomeFragment">
+
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical"
+            android:id="@+id/car_pro"
+            tools:ignore="MissingConstraints">
+            <ViewFlipper
+                android:id="@+id/vf"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorPrimaryDark"
+                    android:text="View 1"
+                    android:textSize="30dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="View 2"
+                    android:textSize="30dp"
+                    android:background="#eec454"/>
+            </ViewFlipper>
+        </LinearLayout>
+
+
+        <!--Horizontal Scroll layout Rec-->
+        <LinearLayout
+            android:id="@+id/horizontalLayoutDokumen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/car_pro"
+            >
+
+            <include
+                layout="@layout/horizontal_scroll_layout_recommend"
+                />
+        </LinearLayout>
+        <!--Horizontal Scroll layout Rec-->
+
+    </LinearLayout>
+</ScrollView>
+</android.support.constraint.ConstraintLayout>

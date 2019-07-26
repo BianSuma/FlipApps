@@ -1,35 +1,46 @@
 package com.mancj.example.adapter;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-
-import com.mancj.example.Page.Fragment1;
-
-public class FragmentAdapter extends FragmentPagerAdapter {
-
-    final int PAGE_COUNT = 4;
-    private String tabTitles[] = new String[] { "GAMES", "APPS", "MOVIES", "BOOKS" };
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 
-    public FragmentAdapter(FragmentManager fm) {
+import com.mancj.example.MainActivity;
+import com.mancj.example.Page.CategoryFragment;
+import com.mancj.example.Page.HomeFragment;
+import com.mancj.example.Page.CartFragment;
+
+public class FragmentAdapter extends FragmentStatePagerAdapter {
+
+    int TabsNumber;
+
+
+    public FragmentAdapter(FragmentManager fm, int NumberOfTabs) {
         super(fm);
-    }
+        TabsNumber = NumberOfTabs;
 
-    @Override
-    public int getCount() {
-        return PAGE_COUNT;
     }
 
     @Override
     public Fragment getItem(int position) {
-        return Fragment1.newInstance(position + 1);
+        switch (position) {
+            case 0:
+                HomeFragment homeFragment = new HomeFragment();
+                return homeFragment;
+            case 1:
+                CategoryFragment CategoryFragment = new CategoryFragment();
+                return CategoryFragment;
+            case 2:
+                CartFragment cartFragment = new CartFragment();
+                return cartFragment;
+            default:
+                return null;
+        }
     }
 
-
     @Override
-    public CharSequence getPageTitle(int position) {
-        // Generate title based on item position
-        return tabTitles[position];
+    public int getCount() {
+        return TabsNumber;
     }
 }
