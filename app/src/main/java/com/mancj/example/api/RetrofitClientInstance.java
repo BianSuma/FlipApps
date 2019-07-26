@@ -30,7 +30,7 @@ public class RetrofitClientInstance {
         @Headers("Content-type: application/json")
         @GET("/api/wishlist?fliptoken=flip123&user_id=1")
         Call<WishlistData> getWishlist();
-    }
+    }   
 
     public interface deleteWishlistService {
         @FormUrlEncoded

@@ -63,8 +63,8 @@ public class WishlistActivity extends AppCompatActivity implements SingleChoiceD
     }
 
     @Override
-    public void onPositiveButtonClicked() {
-
+    public void onPositiveButtonClicked(Wishlist wishlistDelete) {
+        deleteWishlist(wishlistDelete);
     }
 
     @Override
@@ -135,41 +135,21 @@ public class WishlistActivity extends AppCompatActivity implements SingleChoiceD
         });
     }
 
-    void deleteWishlist(Wishlist delete) {
+    void deleteWishlist(Wishlist wishlistDelete) {
         // This is delete method for wishlist
         progressBar.setVisibility(View.VISIBLE);
-        Wishlist wishlistDelete = new Wishlist();
-
-        for (Wishlist dataWishlist : wishlistList) {
-            if (dataWishlist.getApp_id() == delete.getApp_id()) {
-                wishlistDelete = delete;
-            } else {
-
-            }
-        }
 
         RetrofitClientInstance.deleteWishlistService deleteWishlistService = RetrofitClientInstance.getRetrofitInstance().create(RetrofitClientInstance.deleteWishlistService.class);
-        Call<WishlistData> call = deleteWishlistService.deleteWishlist("flip123", wishlistDelete.getApp_id());
+        Call<WishlistData> call = deleteWishlistService.deleteWishlist("flip123", wishlistDelete.getWishlist_id());
         call.enqueue(new Callback<WishlistData>() {
             @Override
             public void onResponse(Call<WishlistData> call, Response<WishlistData> response) {
+                progressBar.setVisibility(View.GONE);
+                wishlistList.clear();
 
-                if (response.isSuccessful()) {
-                    progressBar.setVisibility(View.GONE);
-                    Log.d("WishlistActivity", "onResponse: Server Response: " + response.toString());
-                    assert response.body() != null;
-                    Log.d("WishlistActivity", "onResponse: received information: " + response.body().toString());
-                    wishlistList.clear();
-
-//                    for(Wishlist datawishlist : response.body().getWishlist()) {
-//                        if (datawishlist.getCategory_name().equalsIgnoreCase(list[position])) {
-//                            wishlist.add(datawishlist);
-//                        } else {
-//
-//                        }
-//                    }
-                    populateListView(wishlistList);
-                }
+                assert response.body() != null;
+                wishlistList.addAll(response.body().getWishlist());
+                populateListView(wishlistList);
             }
 
             @Override
@@ -193,7 +173,6 @@ public class WishlistActivity extends AppCompatActivity implements SingleChoiceD
                     wishlistList = new ArrayList<Wishlist>();
                     populateListView(wishlistList);
                 } else {
-                    progressBar.setVisibility(View.GONE);
                     Log.d("WishlistActivity", "onResponse: Server Response: " + response.toString());
                     assert response.body() != null;
                     Log.d("WishlistActivity", "onResponse: received information: " + response.body().toString());
