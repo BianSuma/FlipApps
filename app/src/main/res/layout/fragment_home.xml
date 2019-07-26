@@ -66,6 +66,22 @@ tools:context=".Page.HomeFragment">
         </LinearLayout>
         <!--Horizontal Scroll layout Rec-->
 
+        <!--Horizontal Scroll layout Rec-->
+        <LinearLayout
+            android:id="@+id/horizontalLayoutTop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/horizontalLayoutDokumen"
+            >
+
+            <include
+                layout="@layout/horizontal_scroll_layout_top"
+                />
+        </LinearLayout>
+        <!--Horizontal Scroll layout Rec-->
+
     </LinearLayout>
 </ScrollView>
 </android.support.constraint.ConstraintLayout>

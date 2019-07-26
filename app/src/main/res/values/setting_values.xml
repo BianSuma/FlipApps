@@ -22,4 +22,6 @@
     //recommend
     <string name="title_dokumen">Recommended</string>
 
+    //Top rate
+    <string name="title_Top">Top Rate</string>
 </resources>

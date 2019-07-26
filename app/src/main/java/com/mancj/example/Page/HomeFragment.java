@@ -22,6 +22,7 @@ import android.widget.ViewFlipper;
 import com.mancj.example.MainActivity;
 import com.mancj.example.R;
 import com.mancj.example.adapter.HorizontalRecAdapter;
+import com.mancj.example.adapter.HorizontalTopAdapter;
 import com.mancj.example.adapter.HorizontalScrollModel;
 
 import java.util.ArrayList;
@@ -58,6 +59,7 @@ public class HomeFragment extends Fragment{
         super.onViewCreated(view, savedInstanceState);
         viewflip(view);
         HorizontalScrollRec(view);
+        HorizontalScrollTop(view);
 
     }
 
@@ -93,12 +95,12 @@ public class HomeFragment extends Fragment{
         horizontalRecyclerView=view.findViewById(R.id.horizontal_scroll_layout_recycler);
 
         List<HorizontalScrollModel> horizontalScrollModelListDokumen = new ArrayList<>();
-        horizontalScrollModelListDokumen.add(new HorizontalScrollModel(R.mipmap.ic_launcher,"App1","mantap","Rp.500"));
-        horizontalScrollModelListDokumen.add(new HorizontalScrollModel(R.mipmap.ic_launcher,"App1","keren","Rp.500"));
-        horizontalScrollModelListDokumen.add(new HorizontalScrollModel(R.mipmap.ic_launcher,"App1","asyik","Rp.500"));
-        horizontalScrollModelListDokumen.add(new HorizontalScrollModel(R.mipmap.ic_launcher,"Sertifikat","wow banget","Rp.500"));
-        horizontalScrollModelListDokumen.add(new HorizontalScrollModel(R.mipmap.ic_launcher,"Portfolio","wadaw","Rp.500"));
-        horizontalScrollModelListDokumen.add(new HorizontalScrollModel(R.mipmap.ic_launcher,"Skripsi","luar biasa","Rp.500"));
+        horizontalScrollModelListDokumen.add(new HorizontalScrollModel(R.mipmap.ic_launcher,"App1","Smart Home","Rp.2000000"));
+        horizontalScrollModelListDokumen.add(new HorizontalScrollModel(R.mipmap.ic_launcher,"App2","Security","Rp.1500000"));
+        horizontalScrollModelListDokumen.add(new HorizontalScrollModel(R.mipmap.ic_launcher,"App3","Sensors","Rp.3000000"));
+        horizontalScrollModelListDokumen.add(new HorizontalScrollModel(R.mipmap.ic_launcher,"App3","Educations","Rp.1000000"));
+        horizontalScrollModelListDokumen.add(new HorizontalScrollModel(R.mipmap.ic_launcher,"App4","Enterprise","Rp.2000000"));
+        horizontalScrollModelListDokumen.add(new HorizontalScrollModel(R.mipmap.ic_launcher,"App5","Outdoors","Rp.1500000"));
 
         HorizontalRecAdapter horizontalDokumenScrollAdapter =new HorizontalRecAdapter(horizontalScrollModelListDokumen);
         LinearLayoutManager linearLayoutManager= new LinearLayoutManager(getContext());
@@ -107,6 +109,29 @@ public class HomeFragment extends Fragment{
 
         horizontalRecyclerView.setAdapter(horizontalDokumenScrollAdapter);
         horizontalDokumenScrollAdapter.notifyDataSetChanged();
+    }
+
+    public void HorizontalScrollTop(View view){
+        ///Horizontal Dokumen layout
+        horizontallayoutTitle= view.findViewById(R.id.horizontal_scroll_layout_title1);
+        horizontalviewAllButton=view.findViewById(R.id.horizontal_scroll_view_all_button1);
+        horizontalRecyclerView2=view.findViewById(R.id.horizontal_scroll_layout_recycler1);
+
+        List<HorizontalScrollModel> horizontalScrollModelListTop = new ArrayList<>();
+        horizontalScrollModelListTop.add(new HorizontalScrollModel(R.mipmap.ic_launcher,"App1","Smart Home","Rp.2000000"));
+        horizontalScrollModelListTop.add(new HorizontalScrollModel(R.mipmap.ic_launcher,"App2","Security","Rp.1500000"));
+        horizontalScrollModelListTop.add(new HorizontalScrollModel(R.mipmap.ic_launcher,"App3","Sensors","Rp.3000000"));
+        horizontalScrollModelListTop.add(new HorizontalScrollModel(R.mipmap.ic_launcher,"App3","Educations","Rp.1000000"));
+        horizontalScrollModelListTop.add(new HorizontalScrollModel(R.mipmap.ic_launcher,"App4","Enterprise","Rp.2000000"));
+        horizontalScrollModelListTop.add(new HorizontalScrollModel(R.mipmap.ic_launcher,"App5","Outdoors","Rp.1500000"));
+
+        HorizontalTopAdapter horizontalTopScrollAdapter =new HorizontalTopAdapter(horizontalScrollModelListTop);
+        LinearLayoutManager linearLayoutManager= new LinearLayoutManager(getContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        horizontalRecyclerView2.setLayoutManager(linearLayoutManager);
+
+        horizontalRecyclerView2.setAdapter(horizontalTopScrollAdapter);
+        horizontalTopScrollAdapter.notifyDataSetChanged();
     }
 
     public interface OnFragmentInteractionListener {
