@@ -118,7 +118,7 @@ public class WishlistActivity extends AppCompatActivity implements SingleChoiceD
                 assert response.body() != null;
 
                 if (response.body() == null) {
-                    wishlistList = new ArrayList<Wishlist>();
+                    wishlistList = new ArrayList<>();
                     populateListView(wishlistList);
                 } else {
                     Log.d("WishlistActivity", "onResponse: received information: " + response.body().toString());
@@ -145,17 +145,19 @@ public class WishlistActivity extends AppCompatActivity implements SingleChoiceD
             @Override
             public void onResponse(Call<WishlistData> call, Response<WishlistData> response) {
                 progressBar.setVisibility(View.GONE);
-                wishlistList.clear();
+                Toast.makeText(WishlistActivity.this, "Wishlist has been successfully deleted.", Toast.LENGTH_LONG).show();
 
-                assert response.body() != null;
-                wishlistList.addAll(response.body().getWishlist());
-                populateListView(wishlistList);
+                wishlistList.clear();
+                showWishlist();
             }
 
             @Override
             public void onFailure(Call<WishlistData> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(WishlistActivity.this, "There's no internet connection", Toast.LENGTH_LONG).show();
+                Log.d("Wishlist Activity", t.getMessage());
+                wishlistList.clear();
+                showWishlist();
+//                Toast.makeText(WishlistActivity.this, "There's no internet connection", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -170,7 +172,7 @@ public class WishlistActivity extends AppCompatActivity implements SingleChoiceD
             public void onResponse(Call<WishlistData> call, Response<WishlistData> response) {
                 progressBar.setVisibility(View.GONE);
                 if (response.body() == null) {
-                    wishlistList = new ArrayList<Wishlist>();
+                    wishlistList = new ArrayList<>();
                     populateListView(wishlistList);
                 } else {
                     Log.d("WishlistActivity", "onResponse: Server Response: " + response.toString());
@@ -181,8 +183,6 @@ public class WishlistActivity extends AppCompatActivity implements SingleChoiceD
                     for(Wishlist datawishlist : response.body().getWishlist()) {
                         if (datawishlist.getCategory_name().equalsIgnoreCase(list[position])) {
                             wishlistList.add(datawishlist);
-                        } else {
-
                         }
                     }
                     populateListView(wishlistList);

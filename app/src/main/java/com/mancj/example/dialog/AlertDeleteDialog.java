@@ -54,7 +54,6 @@ public class AlertDeleteDialog extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         alertListener.onPositiveButtonClicked(wishlistDelete);
-                        Log.d("Wishlist delete :", wishlistDelete.toString());
                     }
                 })
                 .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
