@@ -21,6 +21,7 @@ import com.mancj.example.Page.AccountActivity;
 import com.mancj.example.Page.CartFragment;
 import com.mancj.example.Page.CategoryFragment;
 import com.mancj.example.Page.HomeFragment;
+import com.mancj.example.Page.LoginActivity;
 import com.mancj.example.adapter.AccountAdapter;
 import com.mancj.example.adapter.FragmentAdapter;
 import com.mancj.example.Page.MyAppsActivity;
@@ -148,6 +149,10 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_send) {
 
+        } else if (id == R.id.nav_log_out) {
+            // Remove the shared preferences data here
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

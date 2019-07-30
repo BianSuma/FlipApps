@@ -139,7 +139,7 @@ public class WishlistActivity extends AppCompatActivity implements SingleChoiceD
         // This is delete method for wishlist
         progressBar.setVisibility(View.VISIBLE);
 
-        RetrofitClientInstance.deleteWishlistService deleteWishlistService = RetrofitClientInstance.getRetrofitInstance().create(RetrofitClientInstance.deleteWishlistService.class);
+        RetrofitClientInstance.DeleteWishlistService deleteWishlistService = RetrofitClientInstance.getRetrofitInstance().create(RetrofitClientInstance.DeleteWishlistService.class);
         Call<WishlistData> call = deleteWishlistService.deleteWishlist("flip123", wishlistDelete.getWishlist_id());
         call.enqueue(new Callback<WishlistData>() {
             @Override

@@ -1,11 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".Page.LoginActivity"
+    android:padding="30dp"
     tools:showIn="@layout/activity_login">
 
-</android.support.constraint.ConstraintLayout>
+    <EditText
+        android:id="@+id/editTextEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="256dp"
+        android:layout_marginEnd="8dp"
+        android:layout_centerInParent="true"
+        android:textSize="20sp"
+        android:ems="10"
+        android:padding="10dp"
+        android:drawablePadding="10dp"
+        android:drawableLeft="@drawable/ic_mail_outline_black_24dp"
+        android:background="@drawable/edit_text_round"
+        android:hint="Email..."
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/editTextPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="40dp"
+        android:textSize="20sp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:hint="Password"
+        android:drawableLeft="@drawable/ic_lock_open_black_24dp"
+        android:padding="10dp"
+        android:drawablePadding="10dp"
+        android:background="@drawable/edit_text_round"
+        android:inputType="textPassword"
+        android:layout_below="@+id/editTextEmail"/>
+
+    <Button
+        android:id="@+id/btnSignIn"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/sign_in_button"
+        android:layout_centerHorizontal="true"
+        android:text="Sign In"
+        android:layout_below="@+id/editTextPassword"/>main
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="or"
+        android:textSize="20sp"
+        android:layout_marginTop="5dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/btnSignIn"/>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:textSize="24sp"
+        android:textColor="@color/colorLightBlue"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Sign In With"/>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/googleSignIn"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:padding="5dp"
+            android:background="@drawable/google_auth_button"
+            android:drawablePadding="5dp"
+            android:textColor="@color/white"
+            android:drawableLeft="@drawable/google"
+            android:text="Google"/>
+
+        <Button
+            android:id="@+id/facebookSignIn"
+            android:drawablePadding="5dp"
+            android:padding="5dp"
+            android:textColor="@color/white"
+            android:background="@drawable/facebook_auth_button"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/facebook"
+            android:text="Facebook"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>

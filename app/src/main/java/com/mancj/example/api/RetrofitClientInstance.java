@@ -1,5 +1,6 @@
 package com.mancj.example.api;
 
+import com.mancj.example.pojo.AuthData;
 import com.mancj.example.pojo.WishlistData;
 
 import retrofit2.Call;
@@ -32,11 +33,19 @@ public class RetrofitClientInstance {
         Call<WishlistData> getWishlist();
     }   
 
-    public interface deleteWishlistService {
+    public interface DeleteWishlistService {
         @FormUrlEncoded
         @POST("/api/wishlist/delete")
         Call<WishlistData> deleteWishlist(@Field("fliptoken") String fliptoken,
                                           @Field("wishlist_id") int wishlist_id);
+    }
+
+    public interface GetAuth {
+        @FormUrlEncoded
+        @POST("api/auth/login")
+        Call<AuthData> getAuth(@Field("fliptoken") String fliptoken,
+                               @Field("user_email") String user_email,
+                               @Field("user_password") String user_password);
     }
 
 }
