@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,14 +69,7 @@ public class WishlistAdapter extends BaseAdapter{
 
         // For the view
         if (wishlistData.getApp_id() == 0) {
-            appNameTextView.setText("No App");
-            appSizeTextView.setText("Price : -");
-            if (wishlistData.getApp_poster() != null && wishlistData.getApp_poster().length() > 0) {
-                Picasso.get().load(wishlistData.getApp_poster()).placeholder(R.drawable.basket).into(appImageView);
-            } else {
-                Toast.makeText(context, "Empty Image URL", Toast.LENGTH_SHORT).show();
-                Picasso.get().load(R.drawable.basket).into(appImageView);
-            }
+            // If the wishlist data is null
         } else {
             appNameTextView.setText(wishlistData.getApp_name());
             appSizeTextView.setText("Price : " + kursIndonesia.format(wishlistData.getApp_price()));
@@ -96,7 +90,7 @@ public class WishlistAdapter extends BaseAdapter{
         convertView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                openDeleteAlertDialog(((AppCompatActivity)context).getSupportFragmentManager());
+                openDeleteAlertDialog(((AppCompatActivity)context).getSupportFragmentManager(), wishlistData);
                 return true;
             }
         });
@@ -104,8 +98,8 @@ public class WishlistAdapter extends BaseAdapter{
         return convertView;
     }
 
-    void openDeleteAlertDialog(FragmentManager fm) {
-        DialogFragment alertDeleteDialog = new AlertDeleteDialog();
+    void openDeleteAlertDialog(FragmentManager fm, Wishlist wishlist) {
+        DialogFragment alertDeleteDialog = new AlertDeleteDialog(wishlist);
         alertDeleteDialog.setCancelable(false);
         alertDeleteDialog.show(fm, "Alert Delete Dialog");
     }

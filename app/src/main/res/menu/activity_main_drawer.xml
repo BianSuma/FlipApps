@@ -33,4 +33,9 @@
         </menu>
     </item>
 
+    <item
+        android:id="@+id/nav_log_out"
+        android:icon="@drawable/sign_out"
+        android:title="Log Out"/>
+
 </menu>

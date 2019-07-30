@@ -9,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -21,6 +20,7 @@ import android.widget.Toast;
 
 import com.mancj.example.R;
 import com.mancj.example.adapter.WishlistAdapter;
+import com.mancj.example.api.RetrofitClientInstance;
 import com.mancj.example.dialog.AlertDeleteDialog;
 import com.mancj.example.dialog.SingleChoiceDialog;
 import com.mancj.example.pojo.Wishlist;
@@ -29,14 +29,6 @@ import com.mancj.example.pojo.WishlistData;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.DELETE;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
-import retrofit2.http.Headers;
-import retrofit2.http.POST;
 
 public class WishlistActivity extends AppCompatActivity implements SingleChoiceDialog.SingleChoiceListener, AlertDeleteDialog.AlertDeleteListener {
 
@@ -71,8 +63,8 @@ public class WishlistActivity extends AppCompatActivity implements SingleChoiceD
     }
 
     @Override
-    public void onPositiveButtonClicked() {
-
+    public void onPositiveButtonClicked(Wishlist wishlistDelete) {
+        deleteWishlist(wishlistDelete);
     }
 
     @Override
@@ -116,7 +108,7 @@ public class WishlistActivity extends AppCompatActivity implements SingleChoiceD
 
     void showWishlist() {
         progressBar.setVisibility(View.VISIBLE);
-        MyAPIService myAPIService = RetrofitClientInstance.getRetrofitInstance().create(MyAPIService.class);
+        RetrofitClientInstance.MyAPIService myAPIService = RetrofitClientInstance.getRetrofitInstance().create(RetrofitClientInstance.MyAPIService.class);
         Call<WishlistData> call = myAPIService.getWishlist();
         call.enqueue(new Callback<WishlistData>() {
             @Override
@@ -126,7 +118,7 @@ public class WishlistActivity extends AppCompatActivity implements SingleChoiceD
                 assert response.body() != null;
 
                 if (response.body() == null) {
-                    wishlistList = new ArrayList<Wishlist>();
+                    wishlistList = new ArrayList<>();
                     populateListView(wishlistList);
                 } else {
                     Log.d("WishlistActivity", "onResponse: received information: " + response.body().toString());
@@ -143,47 +135,29 @@ public class WishlistActivity extends AppCompatActivity implements SingleChoiceD
         });
     }
 
-    void deleteWishlist(Wishlist delete) {
+    void deleteWishlist(Wishlist wishlistDelete) {
         // This is delete method for wishlist
         progressBar.setVisibility(View.VISIBLE);
-        Wishlist wishlistDelete = new Wishlist();
 
-        for (Wishlist dataWishlist : wishlistList) {
-            if (dataWishlist.getApp_id() == delete.getApp_id()) {
-                wishlistDelete = delete;
-            } else {
-
-            }
-        }
-
-        deleteApiService deleteApiService = RetrofitClientInstance.getRetrofitInstance().create(deleteApiService.class);
-        Call<WishlistData> call = deleteApiService.deleteWishlist("flip123", wishlistDelete.getApp_id());
+        RetrofitClientInstance.DeleteWishlistService deleteWishlistService = RetrofitClientInstance.getRetrofitInstance().create(RetrofitClientInstance.DeleteWishlistService.class);
+        Call<WishlistData> call = deleteWishlistService.deleteWishlist("flip123", wishlistDelete.getWishlist_id());
         call.enqueue(new Callback<WishlistData>() {
             @Override
             public void onResponse(Call<WishlistData> call, Response<WishlistData> response) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(WishlistActivity.this, "Wishlist has been successfully deleted.", Toast.LENGTH_LONG).show();
 
-                if (response.isSuccessful()) {
-                    progressBar.setVisibility(View.GONE);
-                    Log.d("WishlistActivity", "onResponse: Server Response: " + response.toString());
-                    assert response.body() != null;
-                    Log.d("WishlistActivity", "onResponse: received information: " + response.body().toString());
-                    wishlistList.clear();
-
-//                    for(Wishlist datawishlist : response.body().getWishlist()) {
-//                        if (datawishlist.getCategory_name().equalsIgnoreCase(list[position])) {
-//                            wishlist.add(datawishlist);
-//                        } else {
-//
-//                        }
-//                    }
-                    populateListView(wishlistList);
-                }
+                wishlistList.clear();
+                showWishlist();
             }
 
             @Override
             public void onFailure(Call<WishlistData> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(WishlistActivity.this, "There's no internet connection", Toast.LENGTH_LONG).show();
+                Log.d("Wishlist Activity", t.getMessage());
+                wishlistList.clear();
+                showWishlist();
+//                Toast.makeText(WishlistActivity.this, "There's no internet connection", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -191,17 +165,16 @@ public class WishlistActivity extends AppCompatActivity implements SingleChoiceD
     void sortWishlist(final String[] list, final int position) {
         // This is sort method for wishlist by category
         progressBar.setVisibility(View.VISIBLE);
-        MyAPIService myAPIService = RetrofitClientInstance.getRetrofitInstance().create(MyAPIService.class);
+        RetrofitClientInstance.MyAPIService myAPIService = RetrofitClientInstance.getRetrofitInstance().create(RetrofitClientInstance.MyAPIService.class);
         Call<WishlistData> call = myAPIService.getWishlist();
         call.enqueue(new Callback<WishlistData>() {
             @Override
             public void onResponse(Call<WishlistData> call, Response<WishlistData> response) {
                 progressBar.setVisibility(View.GONE);
                 if (response.body() == null) {
-                    wishlistList = new ArrayList<Wishlist>();
+                    wishlistList = new ArrayList<>();
                     populateListView(wishlistList);
                 } else {
-                    progressBar.setVisibility(View.GONE);
                     Log.d("WishlistActivity", "onResponse: Server Response: " + response.toString());
                     assert response.body() != null;
                     Log.d("WishlistActivity", "onResponse: received information: " + response.body().toString());
@@ -210,8 +183,6 @@ public class WishlistActivity extends AppCompatActivity implements SingleChoiceD
                     for(Wishlist datawishlist : response.body().getWishlist()) {
                         if (datawishlist.getCategory_name().equalsIgnoreCase(list[position])) {
                             wishlistList.add(datawishlist);
-                        } else {
-
                         }
                     }
                     populateListView(wishlistList);
@@ -231,30 +202,4 @@ public class WishlistActivity extends AppCompatActivity implements SingleChoiceD
 
     }
 
-    static class RetrofitClientInstance {
-        private static Retrofit retrofit;
-        private static final String BASE_URL = "https://amentiferous-grass.000webhostapp.com";
-        static Retrofit getRetrofitInstance() {
-            if (retrofit == null) {
-                retrofit = new Retrofit.Builder()
-                        .baseUrl(BASE_URL)
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
-            }
-            return retrofit;
-        }
-    }
-}
-
-interface MyAPIService {
-    @Headers("Content-type: application/json")
-    @GET("/api/wishlist?fliptoken=flip123&user_id=1")
-    Call<WishlistData> getWishlist();
-}
-
-interface deleteApiService {
-    @FormUrlEncoded
-    @POST("/api/wishlist/delete")
-    Call<WishlistData> deleteWishlist(@Field("fliptoken") String fliptoken,
-                                      @Field("wishlist_id") int wishlist_id);
 }
