@@ -67,8 +67,8 @@ public class MainActivity extends AppCompatActivity
         //For Tab Bar widget
         TabLayout tabLayout = findViewById(R.id.tabSlider);
         tabLayout.addTab(tabLayout.newTab().setText("HOME"));
-        tabLayout.addTab(tabLayout.newTab().setText("CATEGORY"));
-        tabLayout.addTab(tabLayout.newTab().setText("KART"));
+        tabLayout.addTab(tabLayout.newTab().setText("POPULER"));
+        tabLayout.addTab(tabLayout.newTab().setText("KATEGORI"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = findViewById(R.id.viewPagerSlider);

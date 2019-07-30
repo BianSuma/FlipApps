@@ -24,4 +24,10 @@
 
     //Top rate
     <string name="title_Top">Top Rate</string>
+
+    //New
+    <string name="new_Apps">New Apps</string>
+
+
+
 </resources>
