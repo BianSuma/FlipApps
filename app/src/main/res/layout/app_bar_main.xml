@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
 
-        android:background="@color/biru_flipp">
+        android:background="@color/biru_flipp1">
 
         <com.mancj.materialsearchbar.MaterialSearchBar
             android:id="@+id/searchBar"
@@ -25,7 +25,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="8dp"
             app:mt_navIconEnabled="true"
-            app:mt_placeholder="Search..." />
+            app:mt_placeholder="FlipApps" />
 
 
     </RelativeLayout>

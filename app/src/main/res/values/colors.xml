@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#3F51B5</color>
+    <color name="putih">#fff</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="transparentBlack">#96000000</color>
     <color name="colorBlack">#000000</color>
     <color name="colorLightBlue">#85B7FE</color>
     <color name="colorBlue">#0169FE</color>
+    <color name="aspal">#2c3e50</color>
+    <color name="emerald">#2ecc71</color>
 
 
     //AppBar
-    <color name="biru_flipp">#b7d2f7</color>
+    <color name="biru_flipp">#3498db</color>
+    <color name="biru_flipp1">#2980b9</color>
+    <color name="biru_flipp2">#22648f</color>
 </resources>
