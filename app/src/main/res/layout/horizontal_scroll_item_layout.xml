@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/putih"
     android:layout_margin="@dimen/margin_4dp"
     android:elevation="@dimen/background_elevation_3dp"
@@ -15,11 +16,11 @@
         android:layout_marginStart="@dimen/margin_16dp"
         android:layout_marginTop="@dimen/margin_16dp"
         android:layout_marginEnd="@dimen/margin_16dp"
-        android:background="@color/biru_flipp1"
+        android:background="@color/putih"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ic_launcher"
+        app:srcCompat="@drawable/google"
         android:contentDescription="@string/content_descriptionn" />
 
     <TextView
@@ -67,4 +68,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/wishlist_btn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:onClick="wishlistOnCLick"
+        android:tint="@color/whiteBone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_action_wishlist" />
+
 </android.support.constraint.ConstraintLayout>
