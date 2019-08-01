@@ -7,34 +7,68 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".Page.LoginActivity"
     android:padding="30dp"
+    android:layout_marginTop="-200dp"
     tools:showIn="@layout/activity_login">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayoutSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+        <TextView
+            android:id="@+id/textSignIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:textSize="16sp"
+            android:text="Sign in"
+            android:textColor="@color/colorBlack"/>
+
+        <TextView
+            android:id="@+id/accountAsk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/btnSignUp"
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp"
+            android:text="Don't have an account?"/>
+
+        <TextView
+            android:id="@+id/btnSignUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentRight="true"
+            android:onClick="onClick"
+            android:text="Sign Up"
+            android:textAlignment="viewEnd"
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp" />
+
+
+    </RelativeLayout>
 
     <EditText
         android:id="@+id/editTextEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="256dp"
-        android:layout_marginEnd="8dp"
-        android:layout_centerInParent="true"
+        android:layout_below="@+id/relativeLayoutSignUp"
+        android:layout_marginTop="10dp"
         android:textSize="20sp"
-        android:ems="10"
         android:padding="10dp"
         android:drawablePadding="10dp"
         android:drawableLeft="@drawable/ic_mail_outline_black_24dp"
         android:background="@drawable/edit_text_round"
-        android:hint="Email..."
+        android:hint="Email"
         android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/editTextPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="40dp"
         android:textSize="20sp"
-        android:layout_marginEnd="8dp"
-        android:ems="10"
         android:hint="Password"
         android:drawableLeft="@drawable/ic_lock_open_black_24dp"
         android:padding="10dp"
@@ -51,7 +85,7 @@
         android:background="@drawable/sign_in_button"
         android:layout_centerHorizontal="true"
         android:text="Sign In"
-        android:layout_below="@+id/editTextPassword"/>main
+        android:layout_below="@+id/editTextPassword"/>
 
     <TextView
         android:id="@+id/textView1"
@@ -68,11 +102,11 @@
         android:layout_marginTop="5dp"
         android:layout_below="@+id/textView1"
         android:layout_width="wrap_content"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:textColor="@color/colorLightBlue"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="Sign In With"/>
+        android:text="Sign in with"/>
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -85,23 +119,21 @@
 
         <Button
             android:id="@+id/googleSignIn"
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
-            android:padding="5dp"
             android:background="@drawable/google_auth_button"
-            android:drawablePadding="5dp"
+            android:padding="10dp"
             android:textColor="@color/white"
             android:drawableLeft="@drawable/google"
             android:text="Google"/>
 
         <Button
             android:id="@+id/facebookSignIn"
-            android:drawablePadding="5dp"
-            android:padding="5dp"
+            android:padding="10dp"
             android:textColor="@color/white"
             android:background="@drawable/facebook_auth_button"
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/facebook"
             android:text="Facebook"

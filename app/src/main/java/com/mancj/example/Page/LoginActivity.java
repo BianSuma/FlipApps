@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.mancj.example.MainActivity;
 import com.mancj.example.R;
+import com.mancj.example.api.ErrorAPI;
 import com.mancj.example.api.RetrofitClientInstance;
 import com.mancj.example.pojo.Auth;
 import com.mancj.example.pojo.AuthData;
@@ -19,7 +20,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText editTextEmail;
     private EditText editTextPass;
@@ -58,6 +59,8 @@ public class LoginActivity extends AppCompatActivity {
                 signInWithFacebook();
             }
         });
+
+
     }
 
     private void signInWithGoogle() {
@@ -70,31 +73,42 @@ public class LoginActivity extends AppCompatActivity {
         if (editTextEmail.getText().toString().trim().equals("") || editTextPass.getText().toString().trim().equals("")) {
             Toast.makeText(this, "Username or password is still empty", Toast.LENGTH_SHORT).show();
         } else {
-            getTargetUser(email, pass);
+            if (ErrorAPI.checkConnection(this)) {
+                getTargetUser(email, pass);
+            } else {
+                Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
     private void getTargetUser(String email, String pass) {
-        RetrofitClientInstance.GetAuth getAuth = RetrofitClientInstance.getRetrofitInstance().create(RetrofitClientInstance.GetAuth.class);
+        RetrofitClientInstance.GetAuth getAuth = RetrofitClientInstance.getRetrofitInstance(this).create(RetrofitClientInstance.GetAuth.class);
         Call<AuthData> call = getAuth.getAuth("flip123", email, pass);
         call.enqueue(new Callback<AuthData>() {
             @Override
             public void onResponse(Call<AuthData> call, Response<AuthData> response) {
-                if (response.body() == null) {
+                Log.d("Response code :", String.valueOf(response.code()));
+                if (response.isSuccessful()) {
+                    if (response.body() == null) {
 //                    Log.d("response", response.toString());
-                    Toast.makeText(LoginActivity.this, "Email or password is wrong", Toast.LENGTH_SHORT).show();
-                } else {
-                    Auth auth = response.body().getAuth();
-                    Log.d("Auth :", auth.toString());
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                    finish();
-                }
 
+                        Toast.makeText(LoginActivity.this, "Email or password is wrong", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Auth auth = response.body().getAuth();
+                        Log.d("Auth :", auth.toString());
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        finish();
+                    }
+                } else {
+//                    if () {
+//
+//                    }
+                }
             }
 
             @Override
             public void onFailure(Call<AuthData> call, Throwable t) {
-                Log.d("User status", t.getMessage());
+                Log.d("Response code", t.getMessage());
                 Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -112,4 +126,8 @@ public class LoginActivity extends AppCompatActivity {
 //        }
     }
 
+    @Override
+    public void onClick(View v) {
+        startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+    }
 }
