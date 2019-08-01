@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_8dp"
         android:text="@string/new_Apps"
-        android:textColor="#e1eaf7"
+        android:textColor="@color/aspal"
         android:textSize="@dimen/text_size_16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/horizontal_scroll_view_all_button2"
@@ -33,7 +33,7 @@
         android:text="@string/text_lihat_semua"
         android:textSize="@dimen/text_size_10sp"
         android:background="@null"
-        android:textColor="#b9cef0"
+        android:textColor="@color/emerald"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

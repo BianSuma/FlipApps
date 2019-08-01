@@ -63,9 +63,9 @@ tools:context=".Page.HomeFragment">
                 android:id="@+id/jumbo_slider_view_pager"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/layout_height_230dp"
-                android:paddingLeft="@dimen/padding_16dp"
-                android:paddingTop="@dimen/padding_8dp"
-                android:paddingRight="@dimen/padding_16dp"
+                android:paddingLeft="@dimen/padding_0dp"
+                android:paddingTop="@dimen/padding_0dp"
+                android:paddingRight="@dimen/padding_0dp"
                 android:paddingBottom="@dimen/padding_8dp"
                 app:layout_constraintBottom_toTopOf="@+id/horizontalLayoutNew"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -107,6 +107,26 @@ tools:context=".Page.HomeFragment">
         </LinearLayout>
         <!--Horizontal Scroll layout Rec-->
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/jumbo2">
+            <!--Slider Jumbo-->
+            <android.support.v4.view.ViewPager
+                android:id="@+id/jumbo_slider_view_pager2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_height_230dp"
+                android:paddingLeft="@dimen/padding_16dp"
+                android:paddingTop="@dimen/padding_8dp"
+                android:paddingRight="@dimen/padding_16dp"
+                android:paddingBottom="@dimen/padding_8dp"
+                app:layout_constraintBottom_toTopOf="@+id/horizontalLayoutRec"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="parent"
+                />
+            <!--Slider Jumbo-->
+        </LinearLayout>
+
         <!--Horizontal Scroll layout Top-->
         <LinearLayout
             android:id="@+id/horizontalLayoutTop"
@@ -114,7 +134,7 @@ tools:context=".Page.HomeFragment">
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/horizontalLayoutRec"
+            app:layout_constraintTop_toBottomOf="@+id/jumbo2"
             >
 
             <include

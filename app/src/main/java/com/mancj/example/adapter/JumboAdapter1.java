@@ -16,11 +16,11 @@ import com.mancj.example.R;
 
 import java.util.List;
 
-public class JumboAdapter extends PagerAdapter {
+public class JumboAdapter1 extends PagerAdapter {
 
     private List<JumboModel> sliderModelList;
 
-    public JumboAdapter(List<JumboModel> sliderModelList){
+    public JumboAdapter1(List<JumboModel> sliderModelList){
         this.sliderModelList=sliderModelList;
     }
 

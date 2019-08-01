@@ -1,6 +1,5 @@
 package com.mancj.example.Page;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,27 +7,22 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.ViewFlipper;
 
-import com.mancj.example.MainActivity;
 import com.mancj.example.R;
 import com.mancj.example.adapter.HorizontalNewAdapter;
 import com.mancj.example.adapter.HorizontalRecAdapter;
 import com.mancj.example.adapter.HorizontalTopAdapter;
 import com.mancj.example.adapter.HorizontalScrollModel;
-import com.mancj.example.adapter.JumboAdapter;
+import com.mancj.example.adapter.JumboAdapter1;
+import com.mancj.example.adapter.JumboAdapter2;
 import com.mancj.example.adapter.JumboModel;
 
 import java.util.ArrayList;
@@ -51,9 +45,9 @@ public class HomeFragment extends Fragment{
 
 
     /////banner Slider
-    private ViewPager bannerSliderViewPager;
-    private List<JumboModel>sliderModelList;
-    private int currentPage =2;
+    private ViewPager bannerSliderViewPager,bannerSliderViewPager2;
+    private List<JumboModel>sliderModelList,sliderModelList2;
+    private int currentPage ,currentPage2 =2;
     private Timer timer;
     final private  long DELAYTIME=3000;
     final private long PERIOD_TIME=3000;
@@ -88,6 +82,7 @@ public class HomeFragment extends Fragment{
         JumboSlider(view);
         HorizontalScrollNew(view);
         HorizontalScrollRec(view);
+        JumboSlider2(view);
         HorizontalScrollTop(view);
 
     }
@@ -118,6 +113,74 @@ public class HomeFragment extends Fragment{
 //    }
 
 
+
+
+    public void JumboSlider2(View view){
+        ////banner slider
+        bannerSliderViewPager2=view.findViewById(R.id.jumbo_slider_view_pager2);
+
+        sliderModelList2=new ArrayList<JumboModel>();
+        sliderModelList2.add(new JumboModel(R.mipmap.ic_launcher,"#077AE4"));
+        sliderModelList2.add(new JumboModel(R.mipmap.ic_launcher,"#00000f"));
+        sliderModelList2.add(new JumboModel(R.mipmap.ic_launcher,"#077AE4"));
+        sliderModelList2.add(new JumboModel(R.mipmap.ic_launcher,"#00000f"));
+        sliderModelList2.add(new JumboModel(R.mipmap.ic_launcher,"#077AE4"));
+        sliderModelList2.add(new JumboModel(R.mipmap.ic_launcher,"#00000f"));
+        sliderModelList2.add(new JumboModel(R.mipmap.ic_launcher,"#077AE4"));
+        sliderModelList2.add(new JumboModel(R.mipmap.ic_launcher,"#00000f"));
+        sliderModelList2.add(new JumboModel(R.mipmap.ic_launcher,"#077AE4"));
+
+        JumboAdapter2 jumboAdapter2=new JumboAdapter2(sliderModelList2);
+        bannerSliderViewPager2.setAdapter(jumboAdapter2);
+        bannerSliderViewPager2.setClipToPadding(false);
+        bannerSliderViewPager2.setPageMargin(35);
+
+        ViewPager.OnPageChangeListener onPageChangeListener=new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                currentPage=i;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+                if (i==ViewPager.SCROLL_STATE_IDLE){
+                    pageLooper();
+                }
+            }
+        };
+
+        bannerSliderViewPager2.addOnPageChangeListener(onPageChangeListener);
+
+        startBannerSlideShow2();
+        bannerSliderViewPager2.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                pageLooper2();
+                stopBannerSliderSHow2();
+                if (event.getAction()==MotionEvent.ACTION_UP){
+                    startBannerSlideShow2();
+                }
+                return false;
+            }
+        });
+        ////banner slider
+    }
+
+
+
+
+
+
+
+
+
+
+
     public void JumboSlider(View view){
         ////banner slider
         bannerSliderViewPager=view.findViewById(R.id.jumbo_slider_view_pager);
@@ -133,7 +196,7 @@ public class HomeFragment extends Fragment{
         sliderModelList.add(new JumboModel(R.mipmap.ic_launcher,"#00000f"));
         sliderModelList.add(new JumboModel(R.mipmap.ic_launcher,"#077AE4"));
 
-        JumboAdapter jumboAdapter=new JumboAdapter(sliderModelList);
+        JumboAdapter1 jumboAdapter=new JumboAdapter1(sliderModelList);
         bannerSliderViewPager.setAdapter(jumboAdapter);
         bannerSliderViewPager.setClipToPadding(false);
         bannerSliderViewPager.setPageMargin(35);
@@ -244,7 +307,7 @@ public class HomeFragment extends Fragment{
     }
 
 
-    ////Jumbo slider
+    ////Jumbo slider1
     private void pageLooper(){
         if (currentPage== sliderModelList.size()-2){
             currentPage=2;
@@ -278,6 +341,45 @@ public class HomeFragment extends Fragment{
     }
 
     private void stopBannerSliderSHow(){
+        timer.cancel();
+    }
+    ////Jumbo slider
+
+
+    ////Jumbo slider2
+    private void pageLooper2(){
+        if (currentPage2== sliderModelList2.size()-2){
+            currentPage2=2;
+            bannerSliderViewPager2.setCurrentItem(currentPage,false);
+        }
+        if (currentPage2== 1){
+            currentPage2=sliderModelList2.size()-3;
+            bannerSliderViewPager2.setCurrentItem(currentPage,false);
+        }
+
+    }
+
+    private void startBannerSlideShow2(){
+        final Handler handler= new Handler();
+        final Runnable update= new Runnable() {
+            @Override
+            public void run() {
+                if (currentPage2>= sliderModelList2.size()){
+                    currentPage2=1;
+                }
+                bannerSliderViewPager2.setCurrentItem(currentPage2++,true);
+            }
+        };
+        timer= new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(update);
+            }
+        },DELAYTIME,PERIOD_TIME );
+    }
+
+    private void stopBannerSliderSHow2(){
         timer.cancel();
     }
     ////Jumbo slider

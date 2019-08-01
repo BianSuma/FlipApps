@@ -15,6 +15,8 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.mancj.example.Page.AccountActivity;
@@ -35,10 +37,17 @@ public class MainActivity extends AppCompatActivity
     MaterialSearchBar searchBar;
     private DrawerLayout drawer;
 
+    //wishlist
+    ImageView imageView;
+    boolean status = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //wishlist
+        imageView = findViewById(R.id.wishlist_btn);
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -222,4 +231,23 @@ public class MainActivity extends AppCompatActivity
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
+
+    //wishlist
+    public void wishlistOnCLick(View view){
+
+        ImageView imageView =(ImageView) view;
+
+
+        if(status==true){
+            imageView.getDrawable().setTint(getResources().getColor(R.color.whiteBone));
+            status= false;
+        }else{
+            imageView.getDrawable().setTint(getResources().getColor(R.color.aspal));
+            status= true;
+        }
+
+
+
+    }
+
 }
